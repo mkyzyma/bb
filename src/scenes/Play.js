@@ -1,14 +1,26 @@
-import config from "../config"
+import config from '../config';
 
 export class Play extends Phaser.Scene {
-  constructor () {
-    super('Play')
-  }
-
-  create () {
-    this.ball = this.physics.add.image(config.scale.width / 2, config.scale.height / 2, 'ball')
-    this.ball.setCollideWorldBounds(true)
-    this.ball.setBounce(0.9)
-    this.ball.setScale(3)
+  constructor() {
+    super('Play');
   }
 }
+
+const create = scene => {
+  scene.ball = scene.physics.add.image(
+    config.scale.width / 2,
+    config.scale.height / 2,
+    'ball',
+  );
+  scene.ball.setCollideWorldBounds(true);
+  scene.ball.setBounce(0.9);
+  scene.ball.setScale(3);
+};
+
+export default {
+  key: 'Play',
+  active: false,
+  create: function() {
+    create(this);
+  },
+};

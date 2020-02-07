@@ -1,7 +1,4 @@
-import { Preload } from '../scenes/Preload'
-import { Play } from '../scenes/Play'
+import Preload from '../scenes/Preload';
+import Play from '../scenes/Play';
 
-export default [
-  Preload,
-  Play
-]
+export default [Preload, Play];

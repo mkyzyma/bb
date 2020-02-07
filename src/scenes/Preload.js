@@ -1,15 +1,20 @@
-import Ball from '../assets/ball.png'
+import Ball from '../assets/ball.png';
 
-export class Preload extends Phaser.Scene {
-  constructor () {
-    super('Preload')
-  }
+const preload = scene => {
+  scene.load.image('ball', Ball);
+};
 
-  preload () {
-    this.load.image('ball', Ball)
-  }
+const create = scene => {
+  scene.scene.start('Play');
+};
 
-  create () {
-    this.scene.start('Play')
-  }
-}
+export default {
+  key: 'Preload',
+  active: true,
+  create: function() {
+    create(this);
+  },
+  preload: function() {
+    preload(this);
+  },
+};
