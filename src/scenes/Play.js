@@ -1,11 +1,5 @@
 import config from '../config';
 
-export class Play extends Phaser.Scene {
-  constructor() {
-    super('Play');
-  }
-}
-
 const create = scene => {
   scene.ball = scene.physics.add.image(
     config.scale.width / 2,
