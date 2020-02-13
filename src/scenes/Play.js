@@ -1,14 +1,20 @@
 import config from '../config';
+import * as ball from '../objects/ball';
 
 const create = scene => {
-  scene.ball = scene.physics.add.image(
-    config.scale.width / 2,
-    config.scale.height / 2,
-    'ball',
-  );
-  scene.ball.setCollideWorldBounds(true);
-  scene.ball.setBounce(0.9);
-  scene.ball.setScale(3);
+  ball.create(scene);
+
+  const motion = scene.add.text(10, 10, '');
+  const orient = scene.add.text(10, 30, '');
+
+  window.addEventListener('devicemotion', event => {
+    const r = event.acceleration;
+    motion.text = `Rotataion: a=${r.x}, b=${r.y}, g=${r.z}`;
+  });
+  window.addEventListener('deviceorientation', event => {
+    const r = event;
+    orient.text = `Rotataion: a=${r.alpha}, b=${r.beta}, g=${r.gamma}`;
+  });
 };
 
 export default {

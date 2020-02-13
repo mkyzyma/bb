@@ -1,5 +1,10 @@
-import Phaser from 'phaser'
-import config from './config'
-import './styles/index.scss'
+import Phaser from 'phaser';
+import config from './config';
+import './styles/index.scss';
 
-new Phaser.Game(config)
+function processEvent(event) {
+  console.log(event);
+}
+window.addEventListener('devicemotion', processEvent);
+
+new Phaser.Game(config);

@@ -1,13 +1,13 @@
 {
-  "name": "phaser-3-webpack-cordova",
-  "displayName": "Phaser 3 WC",
+  "name": "BB",
+  "displayName": "Balls & Boxes",
   "version": "1.0.0",
-  "description": "A boilerplate template with Phaser, Webpack and Cordova",
+  "description": "A game of balls and boxes",
   "main": "index.js",
   "scripts": {
     "get-ip": "echo $(echo 'http://')$(ipconfig getifaddr en0)",
     "build": "webpack --mode=production",
-    "serve": "webpack-dev-server"
+    "serve": "webpack-dev-server --https"
   },
   "keywords": [
     "ecosystem:cordova"
@@ -38,7 +38,8 @@
   },
   "cordova": {
     "plugins": {
-      "cordova-plugin-whitelist": {}
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-sensors": {}
     },
     "platforms": [
       "android"

@@ -13,7 +13,7 @@ export default {
     default: 'arcade',
     arcade: {
       debug: true,
-      gravity: {y: 250},
+      // gravity: {y: 250},
     },
   },
   scene: scenes,
