@@ -1,8 +1,7 @@
-import config from '../config';
-import * as ball from '../objects/ball';
+import Ball from '../objects/ball';
 
 const create = scene => {
-  ball.create(scene);
+  Ball.create(scene);
 
   const motion = scene.add.text(10, 10, '');
   const orient = scene.add.text(10, 30, '');
@@ -20,7 +19,7 @@ const create = scene => {
 export default {
   key: 'Play',
   active: false,
-  create: function() {
+  create() {
     create(this);
-  },
+  }
 };
