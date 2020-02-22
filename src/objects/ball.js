@@ -6,7 +6,6 @@ import phaser from 'phaser';
  */
 const create = scene => {
   const ball = scene.physics.add.image(10, 10, 'ball');
-
   ball.setCollideWorldBounds(true);
   ball.setBounce(0.9);
   ball.body.velocity.y = -100;
