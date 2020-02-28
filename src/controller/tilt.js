@@ -10,13 +10,36 @@ const getRotationFromAccel = ({ x, y, z }) => {
     pitch: -Math.atan2(x, Math.sqrt(y ** 2 + z ** 2)) * RAD_TO_DEG
   };
 };
+
 const start = handler => {
   debug.message('Controller start');
+
+  let calibrated = false;
+
+  let zero = {
+    roll: 0,
+    pitch: 0
+  };
+
   window.addEventListener('devicemotion', event => {
-    const acceleration = event.accelerationIncludingGravity;
-    const rotation = getRotationFromAccel(acceleration);
-    // debug.message(JSON.stringify(rotation));
-    handler(rotation);
+    const a = event.accelerationIncludingGravity;
+
+    const r = getRotationFromAccel(a);
+
+    if (!calibrated) {
+      zero = {
+        roll: r.roll,
+        pitch: r.pitch
+      };
+
+      calibrated = true;
+    }
+
+    const cr = {
+      roll: r.roll - zero.roll,
+      pitch: r.pitch - zero.pitch
+    };
+    handler(cr);
   });
 };
 

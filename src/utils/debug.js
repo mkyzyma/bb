@@ -1,14 +1,14 @@
 let debugInfo = {};
 
-const init = (textElement) => {
+const init = textElement => {
   debugInfo = textElement;
-}
+};
 
-const message= (msg) => {
-  debugInfo.text += `\n${msg}`;
-} 
+const message = msg => {
+  debugInfo.text = msg;
+};
 
 export default {
   init,
-  message,
-}
+  message
+};
