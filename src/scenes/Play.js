@@ -3,6 +3,7 @@ import phaser from 'phaser';
 import Ball from '../objects/ball';
 import controller from '../controller/game';
 import physics from '../core/physics';
+import debug from '../utils/debug';
 
 const { Scene } = phaser;
 const fmtNum = num => {
@@ -16,13 +17,24 @@ const fmtNum = num => {
  * @param {Scene} scene
  */
 const create = scene => {
+  debug.init(scene);
+  debug.message('Debugger ready');
   const ball = Ball.create(scene);
 
   controller.addHandler(controller.tilt, tiltData => {
-    const o = tiltData;
-    physics.slide(ball, 20, tiltData);
+    debug.message('slide');
+    ball.slide(tiltData);
   });
-  controller.start();
+
+  scene.input.on('pointerdown', () => {
+    ball.breakPush();
+  });
+
+  scene.input.on('pointerup', () => {
+    ball.breakRelease();
+  });
+
+  controller.start(scene.input);
 };
 
 export default {

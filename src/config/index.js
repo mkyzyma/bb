@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 import scenes from './scenes';
 
 export default {
@@ -7,14 +8,14 @@ export default {
     mode: Phaser.Scale.RESIZE,
     autoCenter: Phaser.Scale.CENTER_BOTH,
     width: window.innerWidth,
-    height: window.innerHeight,
+    height: window.innerHeight
   },
   physics: {
     default: 'arcade',
     arcade: {
       debug: true,
-      // gravity: {y: 250},
-    },
+      gravity: { y: 0 }
+    }
   },
-  scene: scenes,
+  scene: scenes
 };

@@ -1,11 +1,16 @@
-let debugInfo = {};
+import phaser from 'phaser';
 
-const init = textElement => {
-  debugInfo = textElement;
+let debug = {};
+/**
+ * initialize debug module
+ * @param {phaser.Scene} scene
+ */
+const init = scene => {
+  debug = scene.add.text(0, 0);
 };
 
 const message = msg => {
-  debugInfo.text = msg;
+  debug.text = msg;
 };
 
 export default {

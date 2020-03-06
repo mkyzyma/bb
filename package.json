@@ -42,13 +42,16 @@
   },
   "dependencies": {
     "cordova-android": "^8.1.0",
+    "cordova-plugin-screen-orientation": "^3.0.2",
+    "es6-promise-plugin": "^4.2.2",
     "numeral": "^2.0.6",
     "phaser": "^3.21.0"
   },
   "cordova": {
     "plugins": {
       "cordova-plugin-whitelist": {},
-      "cordova-plugin-sensors": {}
+      "cordova-plugin-sensors": {},
+      "cordova-plugin-screen-orientation": {}
     },
     "platforms": [
       "android"
