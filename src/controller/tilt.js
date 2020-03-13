@@ -1,47 +1,51 @@
-import debug from '../utils/debug';
+import * as R from 'ramda';
+// import debug from '../utils/debug';
+
+const { pipe, curry } = R;
 
 const RAD_TO_DEG = 180 / Math.PI;
-const getRotationFromAccel = ({ x, y, z }) => {
-  /* Reference: http://stackoverflow.com/questions/3755059/3d-accelerometer-calculate-the-orientation#answer-30195572 */
+
+const roll = curry((x, y, z) => {
   const sign = z > 0 ? 1 : -1;
   const miu = 0.001;
+  return Math.atan2(y, sign * Math.sqrt(z ** 2 + miu * x ** 2)) * RAD_TO_DEG;
+});
+
+const pitch = curry((x, y, z) => {
+  return -Math.atan2(x, Math.sqrt(y ** 2 + z ** 2)) * RAD_TO_DEG;
+});
+
+const rotationFromAcceleration = ({ x, y, z }) => {
   return {
-    roll: Math.atan2(y, sign * Math.sqrt(z ** 2 + miu * x ** 2)) * RAD_TO_DEG,
-    pitch: -Math.atan2(x, Math.sqrt(y ** 2 + z ** 2)) * RAD_TO_DEG
+    roll: roll(x, y, z),
+    pitch: pitch(x, y, z)
   };
 };
 
-const start = handler => {
-  debug.message('Controller start');
-
-  let calibrated = false;
-
-  let zero = {
-    roll: 0,
-    pitch: 0
-  };
-
-  window.addEventListener('devicemotion', event => {
-    const a = event.accelerationIncludingGravity;
-
-    const r = getRotationFromAccel(a);
-
-    if (!calibrated) {
-      zero = {
-        roll: r.roll,
-        pitch: r.pitch
-      };
-
-      calibrated = true;
-    }
-
-    const cr = {
-      roll: r.roll - zero.roll,
-      pitch: r.pitch - zero.pitch
-    };
-    handler(cr);
-  });
+const calculate = event => {
+  const a = event.accelerationIncludingGravity;
+  return rotationFromAcceleration(a);
 };
+
+const calibrate = curry((zero, value) => {
+  return {
+    roll: value.roll - zero.roll,
+    pitch: value.pitch - zero.pitch
+  };
+});
+
+const addListener = (handler, options = null) =>
+  window.addEventListener('devicemotion', handler, options);
+
+const rotate = curry((handle, zero, event) => pipe(calculate, calibrate(zero), handle)(event));
+
+const onCalibrate = curry((createHandle, event) =>
+  pipe(calculate, createHandle, addListener)(event)
+);
+
+// const start = curry(userHandler => pipe(rotate, onCalibrate, addListener(R.__, { once: true }))(userHandler));
+
+const start = handler => addListener(onCalibrate(rotate(handler)), { once: true });
 
 export default {
   start

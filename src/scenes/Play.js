@@ -1,20 +1,10 @@
-import numeral from 'numeral';
-import phaser from 'phaser';
 import Ball from '../objects/ball';
 import controller from '../controller/game';
-import physics from '../core/physics';
 import debug from '../utils/debug';
 
-const { Scene } = phaser;
-const fmtNum = num => {
-  return numeral(num)
-    .format('0.00')
-    .padStart(6, ' ');
-};
-
 /**
- *
- * @param {Scene} scene
+ * Create "Play" scene
+ * @param {import('phaser').Scene} scene
  */
 const create = scene => {
   debug.init(scene);
@@ -22,7 +12,6 @@ const create = scene => {
   const ball = Ball.create(scene);
 
   controller.addHandler(controller.tilt, tiltData => {
-    debug.message('slide');
     ball.slide(tiltData);
   });
 

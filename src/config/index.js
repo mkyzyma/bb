@@ -1,6 +1,10 @@
 import Phaser from 'phaser';
 import scenes from './scenes';
 
+/**
+ * @typedef {GameObject} Phaser.GameObjects.GameObject
+ */
+
 export default {
   type: Phaser.AUTO,
   pixelArt: true,
@@ -10,11 +14,12 @@ export default {
     width: window.innerWidth,
     height: window.innerHeight
   },
+  pixelArt: true,
+  antialias: true,
   physics: {
-    default: 'arcade',
-    arcade: {
-      debug: true,
-      gravity: { y: 0 }
+    default: 'matter',
+    matter: {
+      gravity: { y: 0 } // Top down game, so no gravity
     }
   },
   scene: scenes

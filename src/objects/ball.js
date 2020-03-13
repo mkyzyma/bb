@@ -1,40 +1,40 @@
-import phaser from 'phaser';
+import * as R from 'ramda';
 import physics from '../core/physics';
-import debug from '../utils/debug';
+
+const { curry } = R;
 /**
- *
- * @param {phaser.Scene} scene
+ * @param {import('phaser').Scene} scene
  */
 const create = scene => {
-  const ball = scene.physics.add.image(10, 10, 'ball');
-  ball.setCollideWorldBounds(true);
-  ball.setBounce(0.5);
-  ball.setVelocity(10, 10);
-  const slidePowerDefault = 20;
+  const props = {
+    restitution: 0.5,
+    friction: 0.01,
+    frictionAir: 0,
+    frictionStatic: 0,
+    density: 0.01
+  };
+  const skills = {
+    breakPower: 5
+  };
+  const ball = scene.matter.add.sprite(400, 200, 'ball');
+  ball.setCircle(ball.width / 2, props);
+
+  const slidePowerDefault = 1;
   const slidePower = slidePowerDefault;
 
-  let breakPushed = false;
+  const slide = curry(physics.slide)(ball)(slidePower);
+  const setFriction = curry(physics.setFriction)(ball);
 
-  const slide = physics.slide(ball.body)(slidePower);
+  // slide({
+  //   roll: 300,
+  //   pitch: -150
+  // });
 
   return {
     sprite: ball,
-
-    slide: tilt => {
-      if (breakPushed) {
-        tilt.roll /= 2;
-        tilt.pitch /= 2;
-      }
-      slide(tilt);
-    },
-
-    breakPush: () => {
-      breakPushed = true;
-    },
-
-    breakRelease: () => {
-      breakPushed = false;
-    }
+    slide,
+    breakPush: () => setFriction(props.frictionAir * skills.breakPower),
+    breakRelease: () => setFriction(props.frictionAir)
   };
 };
 

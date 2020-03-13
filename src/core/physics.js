@@ -1,33 +1,36 @@
-import phaser from 'phaser';
 import debug from '../utils/debug';
+
+/**
+ * @typedef {Phaser.GameObjects.GameObject} GameObject
+ */
+
 /**
  *
- *@param {phaser.Physics.Arcade.Body} body
+ *@param {GameObject} o
+ *@param {number} power
  *@param {number} roll
  *@param {number} pitch
  */
-const slide = body => power => ({ roll, pitch }) => {
-  body.setAcceleration(pitch * power, roll * power);
+const slide = (o, power, { roll, pitch }) => {
+  const { body } = o;
+  body.force = { x: 0, y: 0 };
+  body.force = {
+    x: (roll * power) / 2000,
+    y: (-pitch * power) / 2000
+  };
 };
 
 /**
- * Start to break body
- * @param {phaser.Physics.Arcade.Body} body
+ * start to break body
+ * @param {GameObject} o
  * @param {number} friction
  */
-const breakPush = body => dragPower => () => {
-  debug.message(`breakPush ${dragPower}`);
-};
-/**
- * Start to break body
- * @param {phaser.Physics.Arcade.Body} body
- */
-const breakRelease = body => {
-  body.setFriction(0);
+const setFriction = (o, friction) => {
+  debug.message('setFriction');
+  o.body.frictionAir = friction;
 };
 
 export default {
   slide,
-  breakPush,
-  breakRelease
+  setFriction
 };
