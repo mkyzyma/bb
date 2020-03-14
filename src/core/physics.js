@@ -1,19 +1,17 @@
 import debug from '../utils/debug';
 
 /**
- * @typedef {Phaser.GameObjects.GameObject} GameObject
+ * @typedef {import('matter').Body} Body
  */
 
 /**
  *
- *@param {GameObject} o
+ *@param {Body} body
  *@param {number} power
  *@param {number} roll
  *@param {number} pitch
  */
-const slide = (o, power, { roll, pitch }) => {
-  const { body } = o;
-  body.force = { x: 0, y: 0 };
+const slide = (body, power, { roll, pitch }) => {
   body.force = {
     x: (roll * power) / 2000,
     y: (-pitch * power) / 2000

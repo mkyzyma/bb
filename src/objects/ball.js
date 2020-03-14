@@ -25,15 +25,10 @@ const create = scene => {
   const slide = curry(physics.slide)(ball)(slidePower);
   const setFriction = curry(physics.setFriction)(ball);
 
-  // slide({
-  //   roll: 300,
-  //   pitch: -150
-  // });
-
   return {
     sprite: ball,
     slide,
-    breakPush: () => setFriction(props.frictionAir * skills.breakPower),
+    breakPush: () => setFriction(0.1 * skills.breakPower),
     breakRelease: () => setFriction(props.frictionAir)
   };
 };

@@ -43,8 +43,6 @@ const onCalibrate = curry((createHandle, event) =>
   pipe(calculate, createHandle, addListener)(event)
 );
 
-// const start = curry(userHandler => pipe(rotate, onCalibrate, addListener(R.__, { once: true }))(userHandler));
-
 const start = handler => addListener(onCalibrate(rotate(handler)), { once: true });
 
 export default {
