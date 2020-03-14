@@ -22,8 +22,8 @@ const create = scene => {
   const slidePowerDefault = 1;
   const slidePower = slidePowerDefault;
 
-  const slide = curry(physics.slide)(ball)(slidePower);
-  const setFriction = curry(physics.setFriction)(ball);
+  const slide = curry(physics.slide)(ball.body)(slidePower);
+  const setFriction = curry(physics.setFriction)(ball.body);
 
   return {
     sprite: ball,

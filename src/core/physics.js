@@ -20,12 +20,12 @@ const slide = (body, power, { roll, pitch }) => {
 
 /**
  * start to break body
- * @param {GameObject} o
+ * @param {Body} body
  * @param {number} friction
  */
-const setFriction = (o, friction) => {
+const setFriction = (body, friction) => {
   debug.message('setFriction');
-  o.body.frictionAir = friction;
+  body.frictionAir = friction;
 };
 
 export default {
