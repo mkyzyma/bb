@@ -14,16 +14,20 @@ const create = scene => {
     density: 0.01
   };
   const skills = {
-    breakPower: 5
+    breakPower: 2
   };
-  const ball = scene.matter.add.sprite(400, 200, 'ball');
+  const ball = scene.matter.add.sprite(
+    scene.cameras.main.centerX,
+    scene.cameras.main.centerY,
+    'ball'
+  );
   ball.setCircle(ball.width / 2, props);
 
   const slidePowerDefault = 1;
   const slidePower = slidePowerDefault;
 
-  const slide = curry(physics.slide)(ball.body)(slidePower);
-  const setFriction = curry(physics.setFriction)(ball.body);
+  const slide = physics.slide(ball.body, slidePower);
+  const setFriction = physics.setFriction(ball.body);
 
   return {
     sprite: ball,

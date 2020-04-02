@@ -1,21 +1,18 @@
 import Phaser from 'phaser';
 import scenes from './scenes';
 
-/**
- * @typedef {GameObject} Phaser.GameObjects.GameObject
- */
-
 export default {
   type: Phaser.AUTO,
   pixelArt: true,
   scale: {
-    mode: Phaser.Scale.RESIZE,
+    mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
-    width: window.innerWidth,
-    height: window.innerHeight
+    resolution: 1,
+    width: 900,
+    height: 480,
   },
-  pixelArt: true,
   antialias: true,
+  backgroundColor: '#9adaea',
   physics: {
     default: 'matter',
     matter: {

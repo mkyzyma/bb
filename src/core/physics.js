@@ -1,5 +1,9 @@
+import * as R from 'ramda';
 import debug from '../utils/debug';
 
+const { curry } = R;
+
+const SLIDE_DIVIDER = 500;
 /**
  * @typedef {import('matter').Body} Body
  */
@@ -11,22 +15,22 @@ import debug from '../utils/debug';
  *@param {number} roll
  *@param {number} pitch
  */
-const slide = (body, power, { roll, pitch }) => {
+const slide = curry((body, power, { roll, pitch }) => {
   body.force = {
-    x: (roll * power) / 2000,
-    y: (-pitch * power) / 2000
+    x: (roll * power) / SLIDE_DIVIDER,
+    y: (-pitch * power) / SLIDE_DIVIDER
   };
-};
+});
 
 /**
  * start to break body
  * @param {Body} body
  * @param {number} friction
  */
-const setFriction = (body, friction) => {
+const setFriction = curry((body, friction) => {
   debug.message('setFriction');
   body.frictionAir = friction;
-};
+});
 
 export default {
   slide,

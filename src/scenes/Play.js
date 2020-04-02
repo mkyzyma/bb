@@ -11,19 +11,15 @@ const create = scene => {
   debug.message('Debugger ready');
   const ball = Ball.create(scene);
 
-  controller.addHandler(controller.tilt, tiltData => {
-    ball.slide(tiltData);
-  });
+  scene.matter.add.rectangle(0, 0, scene.cameras.main.width, 10, { isStatic: true });
+  scene.matter.add.rectangle(0, 0, 10, scene.cameras.main.height, { isStatic: true });
 
-  scene.input.on('pointerdown', () => {
-    ball.breakPush();
-  });
+  controller.create(scene);
 
-  scene.input.on('pointerup', () => {
-    ball.breakRelease();
-  });
+  controller.tilt.push(ball.slide);
 
-  controller.start(scene.input);
+  controller.pointerdown.push(ball.breakPush);
+  controller.pointerup.push(ball.breakRelease);
 };
 
 export default {

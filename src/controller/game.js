@@ -1,33 +1,35 @@
-import phaser from 'phaser';
 import tiltSensor from './tilt';
-import debug from '../utils/debug';
 
 const tilt = [];
 const pointerdown = [];
+const pointerup = [];
 
-const addHandler = (src, handler) => {
-  src.push(handler);
-};
+// const addHandler = (src, handler) => {
+// src.push(handler);
+// };
 
 const tiltHandler = tiltData => {
-  tilt.forEach(h => h(tiltData));
+  tilt.forEach(handler => handler(tiltData));
 };
 
 const pointerdownHandler = pointer => {
-  console.error(pointerdown);
-  pointerdown.forEach(h => h(pointer));
+  pointerdown.forEach(handler => handler(pointer));
+};
+const pointerupHandler = pointer => {
+  pointerup.forEach(handler => handler(pointer));
 };
 /**
- * @param {phaser.Input} sceneInput
+ * @param {import('phaser').Scene} scene
  */
-const start = sceneInput => {
+const create = scene => {
   tiltSensor.start(tiltHandler);
-  sceneInput.on('pointerdown', pointerdownHandler);
+  scene.input.on('pointerdown', pointerdownHandler);
+  scene.input.on('pointerup', pointerupHandler);
 };
 
 export default {
   tilt,
   pointerdown,
-  start,
-  addHandler
+  pointerup,
+  create
 };

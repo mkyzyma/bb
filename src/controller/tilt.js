@@ -36,14 +36,16 @@ const calibrate = curry((zero, value) => {
 
 const addListener = (handler, options = null) =>
   window.addEventListener('devicemotion', handler, options);
+const addListenerOnce = handler => window.addEventListener('devicemotion', handler, { once: true });
 
-const rotate = curry((handle, zero, event) => pipe(calculate, calibrate(zero), handle)(event));
+const rotate = curry((handle, zero) => pipe(calculate, calibrate(zero), handle));
 
 const onCalibrate = curry((createHandle, event) =>
   pipe(calculate, createHandle, addListener)(event)
 );
 
-const start = handler => addListener(onCalibrate(rotate(handler)), { once: true });
+const start = pipe(rotate, onCalibrate, addListenerOnce);
+// const start = handler => addListenerOnce(onCalibrate(rotate(handler)));
 
 export default {
   start
